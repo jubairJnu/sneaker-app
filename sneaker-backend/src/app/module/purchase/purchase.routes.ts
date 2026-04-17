@@ -1,8 +1,8 @@
 import {Router} from "express";
-import {productControllers} from "./product.controller";
+import {purchaseControllers} from "./purchase.controller";
 
 const router = Router();
-router.post("/", productControllers.createProduct);
-router.get("/", productControllers.getAllProduct);
+router.post("/", purchaseControllers.createPurchase);
+router.get("/", purchaseControllers.getAllPurchase);
 
-export const productRoutes = router;
+export const purchaseRoutes = router;
