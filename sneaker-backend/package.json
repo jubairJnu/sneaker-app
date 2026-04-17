@@ -1,0 +1,31 @@
+{
+  "name": "sneaker-backend",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only --poll  src/server.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.0",
+    "@types/pg": "^8.20.0",
+    "eslint": "^10.2.0",
+    "nodemon": "^3.1.14",
+    "prettier": "^3.8.3",
+    "prisma": "^7.7.0",
+    "ts-node": "^10.9.2"
+  },
+  "peerDependencies": {
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.7.0",
+    "@prisma/client": "^7.7.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "http-status": "^2.1.0",
+    "pg": "^8.20.0"
+  }
+}
