@@ -4,7 +4,8 @@
   "type": "commonjs",
   "private": true,
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/bun": "latest",
