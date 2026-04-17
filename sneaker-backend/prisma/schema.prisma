@@ -1,14 +1,12 @@
-// generator client {
-//   provider = "prisma-client-js"
-// }
-
-// datasource db {
-//   provider = "postgresql"
-// }
-
 generator client {
   provider = "prisma-client-js"
 }
+
+datasource db {
+  provider = "postgresql"
+}
+
+
 
 
 model User {
@@ -52,6 +50,8 @@ model Reservation {
   product   Product           @relation(fields: [productId], references: [id])
   user      User              @relation(fields: [userId], references: [id])
 
+  @@unique([userId,productId,status])
+
   @@map("reservations")
 }
 
@@ -59,6 +59,7 @@ model Purchase {
   id        String   @id @default(uuid())
   userId    String
   productId String
+  quantity Int
   amount    Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
