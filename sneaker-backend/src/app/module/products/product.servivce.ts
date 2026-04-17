@@ -2,7 +2,6 @@ import prisma from "../../../utils/prisma";
 import {IProduct} from "./product.interface";
 
 const createProduct = async (payload: IProduct) => {
-  console.log("call33d");
   return await prisma.product.create({
     data: {
       ...payload,
