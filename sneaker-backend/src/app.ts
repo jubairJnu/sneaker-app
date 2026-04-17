@@ -1,7 +1,6 @@
 import express, {type Application, type Request, type Response} from "express";
-import {globalErrorHandler} from "./middleware/globarErrorHandler";
-import {notFound} from "./middleware/notFound";
-
+import {globalErrorHandler} from "./app/middleware/globarErrorHandler.ts";
+import {notFound} from "./app/middleware/notFound.ts";
 const app: Application = express();
 
 app.use(express.json());
