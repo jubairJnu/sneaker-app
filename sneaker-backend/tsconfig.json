@@ -37,9 +37,10 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "CommonJS",
-    "moduleResolution": "Bundler",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
     "outDir": "./dist",
+    "types": ["node"],
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,

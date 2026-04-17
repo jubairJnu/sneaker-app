@@ -1,14 +1,75 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String  @id @default(uuid())
+  userName String
+  clientId String
+  address  String?
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt()
+  purchases    Purchase[]
+  reservations Reservation[]
+
+  @@unique([clientId])
+  @@map("users")
+}
+
+model Product {
+  id             String        @id @default(uuid())
+  name           String
+  photoUrl       String?
+  totalStock     Int
+  availableStock Int
+  startTime      DateTime
+  endTime        DateTime
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt()
+  purchases      Purchase[]
+  reservations   Reservation[]
+
+  @@map("products")
+}
+
+model Reservation {
+  id        String            @id @default(uuid())
+  userId    String
+  productId String
+  status    ReservationStatus @default(PENDING)
+  expiresAT DateTime
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt()
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("reservations")
+}
+
+model Purchase {
+  id        String  @id @default(uuid())
+  userId    String
+  productId String
+  amount    Float
+  user      User    @relation(fields: [userId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  @@map("purchases")
+}
+
+// ================ ENUM ==============
+
+enum ReservationStatus {
+  PENDING
+  COMPLETED
+  EXPIRED
 }
