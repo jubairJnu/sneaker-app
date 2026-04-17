@@ -1,6 +1,7 @@
 import express, {type Application, type Request, type Response} from "express";
 import {globalErrorHandler} from "./app/middleware/globarErrorHandler";
 import {notFound} from "./app/middleware/notFound";
+import router from "./app/routes";
 
 const app: Application = express();
 
@@ -14,6 +15,8 @@ app.get("/new", (req: Request, res: Response) => {
 });
 
 // ? route use
+
+app.use("/api/v1", router);
 
 // global error handler
 
