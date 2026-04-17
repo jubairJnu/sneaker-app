@@ -1,9 +1,13 @@
-import {prisma} from "../../../utils/prisma";
+import prisma from "../../../utils/prisma";
 import {IProduct} from "./product.interface";
 
 const createProduct = async (payload: IProduct) => {
+  console.log("call33d");
   return await prisma.product.create({
-    data: payload,
+    data: {
+      ...payload,
+      availableStock: payload.totalStock,
+    },
   });
 };
 
@@ -36,7 +40,7 @@ const getAllProducts = async (query: Record<string, any>) => {
 
   return {
     products,
-    pagination: {
+    meta: {
       page: pageNum,
       limit: limitNum,
       total,

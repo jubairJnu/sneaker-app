@@ -4,7 +4,7 @@
   "type": "commonjs",
   "private": true,
   "scripts": {
-    "dev": "ts-node src/server.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -16,6 +16,7 @@
     "prettier": "^3.8.3",
     "prisma": "^7.7.0",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0"
   },
   "peerDependencies": {

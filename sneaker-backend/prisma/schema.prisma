@@ -1,23 +1,26 @@
+// generator client {
+//   provider = "prisma-client-js"
+// }
+
+// datasource db {
+//   provider = "postgresql"
+// }
+
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "postgresql"
-}
 
 model User {
-  id       String  @id @default(uuid())
-  userName String
-  clientId String
-  address  String?
-
+  id           String        @id @default(uuid())
+  userName     String
+  clientId     String        @unique
+  address      String?
   createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt()
+  updatedAt    DateTime      @updatedAt
   purchases    Purchase[]
   reservations Reservation[]
 
-  @@unique([clientId])
   @@map("users")
 }
 
@@ -25,12 +28,13 @@ model Product {
   id             String        @id @default(uuid())
   name           String
   photoUrl       String?
+  price          Float
   totalStock     Int
   availableStock Int
-  startTime      DateTime
+  startTime      DateTime      @default(now())
   endTime        DateTime
   createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt()
+  updatedAt      DateTime      @updatedAt
   purchases      Purchase[]
   reservations   Reservation[]
 
@@ -44,29 +48,25 @@ model Reservation {
   status    ReservationStatus @default(PENDING)
   expiresAT DateTime
   createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt()
-
-  user    User    @relation(fields: [userId], references: [id])
-  product Product @relation(fields: [productId], references: [id])
+  updatedAt DateTime          @updatedAt
+  product   Product           @relation(fields: [productId], references: [id])
+  user      User              @relation(fields: [userId], references: [id])
 
   @@map("reservations")
 }
 
 model Purchase {
-  id        String  @id @default(uuid())
+  id        String   @id @default(uuid())
   userId    String
   productId String
   amount    Float
-  user      User    @relation(fields: [userId], references: [id])
-  product   Product @relation(fields: [productId], references: [id])
-
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt()
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
   @@map("purchases")
 }
-
-// ================ ENUM ==============
 
 enum ReservationStatus {
   PENDING
