@@ -1,8 +1,8 @@
-import app from "./app.ts";
-import config from "./app/config/index.ts";
+import app from "./app";
+import config from "./app/config";
 
 const port = config.port;
 
 app.listen(port, () => {
-  console.log(`Example app listening on port http://localhost:${port}`);
+  console.log(`Sneaker app listening on port http://localhost:${port}`);
 });

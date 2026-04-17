@@ -1,35 +1,58 @@
+// {
+//   "compilerOptions": {
+//     // Environment setup & latest features
+//     "lib": ["esnext"],
+//     "target": "ESNext",
+//     "module": "ESNext",
+//     "moduleDetection": "force",
+//     "jsx": "react-jsx",
+//     "allowJs": true,
+
+//     // Bundler mode
+//     "moduleResolution": "bundler",
+//     "allowImportingTsExtensions": true,
+//     "verbatimModuleSyntax": false,
+//     "noEmit": true,
+//     "paths": {
+//       "@/*": ["./src/*"]
+//     },
+
+//     // Best practices
+//     "strict": true,
+//     "skipLibCheck": true,
+//     "noFallthroughCasesInSwitch": true,
+//     "noUncheckedIndexedAccess": true,
+
+//     // Some stricter flags (disabled by default)
+//     "noUnusedLocals": false,
+//     "noUnusedParameters": false,
+//     "noPropertyAccessFromIndexSignature": false
+//   },
+//   "ts-node": {
+//     "esm": true,
+//     "experimentalSpecifierResolution": "node"
+//   }
+// }
+
 {
   "compilerOptions": {
-    // Environment setup & latest features
-    "lib": ["esnext"],
     "target": "ESNext",
-    "module": "ESNext",
-    "moduleDetection": "force",
-    "jsx": "react-jsx",
-    "allowJs": true,
-
-    // Bundler mode
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": false,
-    "noEmit": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-
-    // Best practices
+    "module": "CommonJS",
+    "moduleResolution": "Bundler",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true,
+    "esModuleInterop": true,
     "skipLibCheck": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-
-    // Some stricter flags (disabled by default)
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
   },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"],
   "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node"
+    "esm": false
   }
 }

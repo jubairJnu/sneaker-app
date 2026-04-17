@@ -1,7 +1,7 @@
 {
   "name": "sneaker-backend",
   "module": "index.ts",
-  "type": "module",
+  "type": "commonjs",
   "private": true,
   "scripts": {
     "dev": "ts-node src/server.ts"
