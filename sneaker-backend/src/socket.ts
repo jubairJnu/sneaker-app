@@ -1,5 +1,6 @@
 import {Server as HTTPServer} from "http";
 import {Socket, Server as SocketIOServer} from "socket.io";
+import config from "./app/config";
 
 let io: SocketIOServer | null = null;
 
@@ -13,7 +14,7 @@ export const getIO = (): SocketIOServer => {
 export const initializeSocket = (server: HTTPServer): void => {
   io = new SocketIOServer(server, {
     cors: {
-      origin: "*",
+      origin: config.frontend_url,
       methods: ["GET", "POST"],
     },
   });
