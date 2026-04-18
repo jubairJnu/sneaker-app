@@ -4,7 +4,7 @@ import {ProductCard} from "@/components/ProductCard";
 import {useEffect, useState} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Toaster} from "sonner";
-import type {Product} from "./lib/api";
+import {API_BASE_URL, type Product} from "./lib/api";
 import {
   SocketProvider,
   useSocket,
@@ -21,7 +21,7 @@ function HomePage() {
   useEffect(() => {
     const fetchProductsData = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/v1/products");
+        const response = await fetch(`${API_BASE_URL}/products`);
         const data = await response.json();
 
         setProducts(data?.data?.products || []);
@@ -48,6 +48,27 @@ function HomePage() {
             ? {...p, availableStock: data.availableStock}
             : p,
         ),
+      );
+    });
+
+    // purchase update
+
+    socket.on("purchase-success", (userPaylaod: any) => {
+      const data = userPaylaod?.data ?? userPaylaod;
+      console.log(data, "purchase");
+      setProducts((prev) =>
+        prev.map((p: any) => {
+          if (p.id === data.productId) {
+            const currentPurchases = p.purchases || [];
+            const newPurchases = [
+              {user: {userName: data.userName}},
+              ...currentPurchases,
+            ].slice(0, 3);
+
+            return {...p, purchases: newPurchases};
+          }
+          return p;
+        }),
       );
     });
 

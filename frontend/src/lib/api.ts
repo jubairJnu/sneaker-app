@@ -1,4 +1,6 @@
-const API_BASE_URL = "http://localhost:3001/api/v1";
+import config from "@/config";
+
+export const API_BASE_URL = `${config.api_url}/api/v1`;
 
 export interface Product {
   id: string;

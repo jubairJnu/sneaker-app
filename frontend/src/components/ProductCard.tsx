@@ -15,8 +15,11 @@ export const ProductCard = ({product}: ProductCardProps) => {
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [isReservedByMe, setIsReservedByMe] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [reservationResponse, setReservationResponse] =
-    useState<ReserveResponse["data"] | null>(null);
+  const [reservationResponse, setReservationResponse] = useState<
+    ReserveResponse["data"] | null
+  >(null);
+
+  console.log(product, "pro");
 
   // Countdown to endTime
   const dropCountdown = useMemo(() => {
@@ -201,6 +204,33 @@ export const ProductCard = ({product}: ProductCardProps) => {
               style={{width: `${stockPercentage}%`}}
             />
           </div>
+        </div>
+
+        <div className="mt-4 pt-4 border-t border-gray-800">
+          <p className="text-[10px] uppercase tracking-wider text-gray-500 mb-2 font-semibold">
+            Recent Purchasers
+          </p>
+          <div className="flex -space-x-2 overflow-hidden mb-1">
+            {product.purchases && product.purchases.length > 0 ? (
+              product.purchases.map((purchase: any, i: number) => (
+                <div
+                  key={i}
+                  className="inline-block h-6 w-6 rounded-full ring-2 ring-gray-900 bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center text-[10px] font-bold text-white"
+                  title={purchase.user.userName}
+                >
+                  {purchase.user.userName.charAt(0).toUpperCase()}
+                </div>
+              ))
+            ) : (
+              <span className="text-xs text-gray-600">No purchases yet</span>
+            )}
+          </div>
+          {product.purchases && product.purchases.length > 0 && (
+            <p className="text-[10px] text-gray-400">
+              {product.purchases[0].user.userName} and{" "}
+              {product.purchases.length - 1} others copped!
+            </p>
+          )}
         </div>
 
         {/* Action buttons */}

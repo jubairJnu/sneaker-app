@@ -33,3 +33,9 @@ export const emitProductStockUpdate = (data: any): void => {
     data,
   });
 };
+
+export const emitSuccesPurchase = (data: any): void => {
+  io?.emit("purchase-success", {
+    data,
+  });
+};

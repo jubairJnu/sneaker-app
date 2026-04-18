@@ -1,4 +1,5 @@
 import {ReservationStatus} from "@prisma/client";
+import {emitSuccesPurchase} from "../../../socket";
 import prisma from "../../../utils/prisma";
 import {IPurchase} from "./purchase.interface";
 
@@ -8,6 +9,13 @@ const createPurchase = async (payload: IPurchase) => {
       where: {
         id: payload.reservationId,
         userId: payload.userId,
+      },
+      include: {
+        user: {
+          select: {
+            userName: true,
+          },
+        },
       },
     });
 
@@ -32,16 +40,33 @@ const createPurchase = async (payload: IPurchase) => {
       },
     });
 
-    return result;
+    return {reservation, result};
   });
+
+  emitSuccesPurchase({
+    productId: trxResult.reservation.productId,
+    userName: trxResult.reservation.user.userName,
+  });
+
   return trxResult;
 };
 
 const getLastThreePurchase = async () => {
   return await prisma.product.findMany({
-    take: 3,
-    orderBy: {
-      createdAt: "desc",
+    include: {
+      purchases: {
+        take: 3,
+        orderBy: {
+          createdAt: "desc",
+        },
+        include: {
+          user: {
+            select: {
+              userName: true,
+            },
+          },
+        },
+      },
     },
   });
 };

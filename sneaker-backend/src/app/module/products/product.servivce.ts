@@ -17,7 +17,10 @@ const getAllProducts = async (query: Record<string, any>) => {
   const limitNum = parseInt(limit) || 10;
   const skip = (pageNum - 1) * limitNum;
 
-  const where: any = {};
+  const where: any = {
+    startTime: {lte: new Date()},
+    endTime: {gte: new Date()},
+  };
   if (name) {
     where.name = {
       contains: name,
@@ -32,6 +35,21 @@ const getAllProducts = async (query: Record<string, any>) => {
       take: limitNum,
       orderBy: {
         createdAt: "desc",
+      },
+      include: {
+        purchases: {
+          take: 3,
+          orderBy: {
+            createdAt: "desc",
+          },
+          include: {
+            user: {
+              select: {
+                userName: true,
+              },
+            },
+          },
+        },
       },
     }),
     prisma.product.count({where}),
