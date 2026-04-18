@@ -50,7 +50,7 @@ model Reservation {
   user      User              @relation(fields: [userId], references: [id])
   purchases Purchase[]
 
-  @@unique([userId, productId, status])
+  @@index([userId, productId, status])
   @@map("reservations")
 }
 

@@ -17,7 +17,6 @@ const createReservation = async (payload: IReserve) => {
       FOR UPDATE
       `;
 
-      console.log(products, "products");
       const product = products[0];
 
       if (!product || product.availableStock <= 0) {
