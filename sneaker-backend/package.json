@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "seed": "bash tools/seed-apply.sh",
+    "seed:export": "bash tools/seed-export.sh"
   },
   "devDependencies": {
     "@types/bun": "latest",
