@@ -1,4 +1,3 @@
-import {ReservationStatus} from "@prisma/client";
 import prisma from "../../../utils/prisma";
 import {IPurchase} from "./purchase.interface";
 
@@ -6,11 +5,8 @@ const createPurchase = async (payload: IPurchase) => {
   const trxResult = await prisma.$transaction(async (tx) => {
     const reservation = await prisma.reservation.findUnique({
       where: {
-        userId_productId_status: {
-          userId: payload.userId,
-          productId: payload.productId,
-          status: ReservationStatus.PENDING,
-        },
+        id: payload.reservationId,
+        userId: payload.userId,
       },
     });
 
