@@ -1,4 +1,5 @@
 import {ReservationStatus} from "@prisma/client";
+import {emitProductStockUpdate} from "../../socket";
 import prisma from "../../utils/prisma";
 import {IReserve} from "./reserve.interface";
 
@@ -16,6 +17,7 @@ const createReservation = async (payload: IReserve) => {
       FOR UPDATE
       `;
 
+      console.log(products, "products");
       const product = products[0];
 
       if (!product || product.availableStock <= 0) {
@@ -54,6 +56,7 @@ const createReservation = async (payload: IReserve) => {
           expiresAT: new Date(Date.now() + 60000),
         },
       });
+      emitProductStockUpdate(productInfo, payload.productId);
 
       return newReservation;
     });

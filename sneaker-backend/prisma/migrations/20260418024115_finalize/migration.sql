@@ -34,6 +34,8 @@ CREATE TABLE "reservations" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "productId" TEXT NOT NULL,
+    "amount" INTEGER NOT NULL,
+    "quantity" INTEGER NOT NULL,
     "status" "ReservationStatus" NOT NULL DEFAULT 'PENDING',
     "expiresAT" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -49,6 +51,7 @@ CREATE TABLE "purchases" (
     "productId" TEXT NOT NULL,
     "quantity" INTEGER NOT NULL,
     "amount" DOUBLE PRECISION NOT NULL,
+    "reservationId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -72,3 +75,6 @@ ALTER TABLE "purchases" ADD CONSTRAINT "purchases_productId_fkey" FOREIGN KEY ("
 
 -- AddForeignKey
 ALTER TABLE "purchases" ADD CONSTRAINT "purchases_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "purchases" ADD CONSTRAINT "purchases_reservationId_fkey" FOREIGN KEY ("reservationId") REFERENCES "reservations"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
