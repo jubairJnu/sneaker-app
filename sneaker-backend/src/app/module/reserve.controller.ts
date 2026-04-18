@@ -14,6 +14,22 @@ const createReservation = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getReservationByUserId = catchAsync(
+  async (req: Request, res: Response) => {
+    const {id} = req.params;
+    const result = await reservationService.getReservationByUserId(
+      id as string,
+    );
+    sendResponse(res, {
+      success: true,
+      statusCode: status.OK,
+      message: "Reservation retrieved succesfully",
+      data: result,
+    });
+  },
+);
+
 export const reservationController = {
   createReservation,
+  getReservationByUserId,
 };

@@ -3,4 +3,5 @@ export interface IPurchase {
   quantity: number;
   amount: number;
   userId: string;
+  reservationId: string;
 }

@@ -37,7 +37,7 @@ const createReservation = async (payload: IReserve) => {
         });
       }
 
-      await tx.product.update({
+      const productInfo = await tx.product.update({
         where: {id: productId, availableStock: {gt: 0}},
         data: {availableStock: {decrement: 1}},
       });
@@ -48,6 +48,8 @@ const createReservation = async (payload: IReserve) => {
         data: {
           productId,
           userId: user.id,
+          amount: productInfo?.price,
+          quantity: 1,
           status: ReservationStatus.PENDING,
           expiresAT: new Date(Date.now() + 60000),
         },
@@ -62,6 +64,15 @@ const createReservation = async (payload: IReserve) => {
   }
 };
 
+const getReservationByUserId = async (userId: string) => {
+  return await prisma.reservation.findMany({
+    where: {
+      userId,
+    },
+  });
+};
+
 export const reservationService = {
   createReservation,
+  getReservationByUserId,
 };

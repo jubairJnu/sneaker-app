@@ -6,9 +6,6 @@ datasource db {
   provider = "postgresql"
 }
 
-
-
-
 model User {
   id           String        @id @default(uuid())
   userName     String
@@ -43,28 +40,32 @@ model Reservation {
   id        String            @id @default(uuid())
   userId    String
   productId String
+  amount Int
+  quantity Int
   status    ReservationStatus @default(PENDING)
   expiresAT DateTime
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
   product   Product           @relation(fields: [productId], references: [id])
   user      User              @relation(fields: [userId], references: [id])
+  purchases Purchase[]
 
-  @@unique([userId,productId,status])
-
+  @@unique([userId, productId, status])
   @@map("reservations")
 }
 
 model Purchase {
-  id        String   @id @default(uuid())
-  userId    String
-  productId String
-  quantity Int
-  amount    Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  product   Product  @relation(fields: [productId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
+  id            String      @id @default(uuid())
+  userId        String
+  productId     String
+  quantity      Int
+  amount        Float
+  reservationId String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  product       Product     @relation(fields: [productId], references: [id])
+  user          User        @relation(fields: [userId], references: [id])
+  reservation   Reservation @relation(fields: [reservationId], references: [id])
 
   @@map("purchases")
 }

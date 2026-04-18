@@ -3,6 +3,6 @@ import {reservationController} from "./reserve.controller";
 
 const router = Router();
 router.post("/", reservationController.createReservation);
-// router.get("/", reservationController.getAllPurchase);
+router.get("/:id", reservationController.getReservationByUserId);
 
 export const reserVationRoutes = router;
