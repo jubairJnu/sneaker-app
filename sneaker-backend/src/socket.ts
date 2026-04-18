@@ -28,9 +28,8 @@ export const initializeSocket = (server: HTTPServer): void => {
   });
 };
 
-export const emitProductStockUpdate = (data: any, productId: string): void => {
+export const emitProductStockUpdate = (data: any): void => {
   io?.emit("stock-update", {
     data,
-    productId,
   });
 };

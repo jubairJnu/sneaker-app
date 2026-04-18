@@ -1,9 +1,10 @@
+import {ReservationStatus} from "@prisma/client";
 import prisma from "../../../utils/prisma";
 import {IPurchase} from "./purchase.interface";
 
 const createPurchase = async (payload: IPurchase) => {
   const trxResult = await prisma.$transaction(async (tx) => {
-    const reservation = await prisma.reservation.findUnique({
+    const reservation = await tx.reservation.findUnique({
       where: {
         id: payload.reservationId,
         userId: payload.userId,
@@ -14,7 +15,7 @@ const createPurchase = async (payload: IPurchase) => {
       throw new Error("Product Reservation not valid");
     }
 
-    const result = await prisma.purchase.create({
+    const result = await tx.purchase.create({
       data: {
         productId: reservation.productId,
         amount: reservation.amount,
@@ -23,6 +24,14 @@ const createPurchase = async (payload: IPurchase) => {
         userId: reservation.userId,
       },
     });
+
+    await tx.reservation.update({
+      where: {id: payload.reservationId},
+      data: {
+        status: ReservationStatus.COMPLETED,
+      },
+    });
+
     return result;
   });
   return trxResult;

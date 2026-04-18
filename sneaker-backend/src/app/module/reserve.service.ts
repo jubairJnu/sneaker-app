@@ -53,10 +53,13 @@ const createReservation = async (payload: IReserve) => {
           amount: productInfo?.price,
           quantity: 1,
           status: ReservationStatus.PENDING,
-          expiresAT: new Date(Date.now() + 60000),
+          expiresAt: new Date(Date.now() + 60000),
         },
       });
-      emitProductStockUpdate(productInfo, payload.productId);
+      emitProductStockUpdate({
+        productId: newReservation.productId,
+        availableStock: productInfo.availableStock,
+      });
 
       return newReservation;
     });
