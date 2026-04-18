@@ -37,6 +37,22 @@ const createReservation = async (payload: IReserve) => {
           },
         });
       }
+      //  preventing duplicate
+
+      if (user) {
+        const existingReservation = await tx.reservation.findFirst({
+          where: {
+            userId: user.id,
+            productId: productId,
+            status: "PENDING",
+            expiresAt: {gt: new Date()},
+          },
+        });
+
+        if (existingReservation) {
+          return existingReservation;
+        }
+      }
 
       const productInfo = await tx.product.update({
         where: {id: productId, availableStock: {gt: 0}},
